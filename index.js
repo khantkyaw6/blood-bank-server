@@ -7,6 +7,8 @@ const httpServer = http.createServer((req, res) => {
 	res.end("Hello, world!\n");
 });
 
+app.get("/", (req, res) => res.send("Hello from Render!"));
+
 httpServer.listen(PORT, () => {
 	console.log(`Server is running at http://localhost:${PORT}`);
 });
