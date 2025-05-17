@@ -45,4 +45,5 @@ const bankSchema = new Schema(
 );
 
 const Bank = model("bank", bankSchema);
+
 module.exports = Bank;
