@@ -2,7 +2,9 @@ const { serviceAsyncWrapper } = require("../../../helpers/serviceAsyncWrapper");
 const Bank = require("../../../models/Bank");
 const {
 	findAllBanks,
+	findBankById,
 } = require("../../../repositories/v1/admin/bankRepository");
+const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const bankService = {
 	index: serviceAsyncWrapper(async (req) => {
@@ -16,9 +18,16 @@ const bankService = {
 		};
 	}),
 	show: serviceAsyncWrapper(async (req) => {
+		const { id } = req.params;
+		const bank = await findBankById(id);
+
+		console.log({ bank });
+
+		if (!bank) throw new NotFoundError("Bank Not Found");
+
 		return {
 			message: "bank detail",
-			data: {},
+			data: { bank },
 		};
 	}),
 	store: serviceAsyncWrapper(async (req) => {

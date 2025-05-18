@@ -11,6 +11,23 @@ const bankRepository = {
 			.lean();
 		return bank;
 	}),
+	findBankById: repositoryAsyncWrapper(async (id) => {
+		const bank = await Bank.findById(id).lean();
+		return bank;
+	}),
+	createBank: repositoryAsyncWrapper(async (data) => {
+		await Bank.create({ ...data });
+	}),
+	updateBank: repositoryAsyncWrapper(async ({ id, data }) => {
+		const updateBank = await Bank.findByIdAndUpdate(
+			id,
+			{ ...data },
+			{ new: true }
+		);
+
+		return updateBank;
+	}),
+	deleteBank: repositoryAsyncWrapper(async (id) => {}),
 };
 
 module.exports = bankRepository;

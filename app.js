@@ -3,6 +3,7 @@ const cors = require("cors");
 // const errorMiddleware = require("./src/middlewares/errorMiddleware");
 const app = express();
 const router = require("./src/routes");
+const errorMiddleware = require("./src/middlewares/errorMiddleware");
 
 require("dotenv").config();
 
@@ -24,6 +25,6 @@ app.get("/", (_req, res) => {
 	});
 });
 
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 module.exports = app;
