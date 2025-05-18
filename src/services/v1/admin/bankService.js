@@ -42,9 +42,9 @@ const bankService = {
 	update: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
 
-		const updateBank = await updateBank({ id, data: req.body });
+		const updatedBank = await updateBank({ id, data: req.body });
 
-		if (!updateBank) throw new NotFoundError("Bank Not Found");
+		if (!updatedBank) throw new NotFoundError("Bank Not Found");
 
 		return {
 			message: "Bank updated successfully.",

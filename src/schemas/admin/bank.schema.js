@@ -28,10 +28,6 @@ const updateBankSchema = z
 			.string()
 			.email("Email must be a valid email address")
 			.optional(),
-		password: z
-			.string()
-			.min(6, "Password must be at least 6 characters long")
-			.optional(),
 		title: z.string().optional(),
 		description: z.string().optional(),
 		address: z.string().optional(),
