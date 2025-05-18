@@ -1,0 +1,4 @@
+const PHONE_NUMBER_REGEX = /^09\d{9,11}$/;
+const NON_NEGATIVE_INTEGER_REGEX = /^(0|[1-9][0-9]*)$/;
+
+module.exports = { PHONE_NUMBER_REGEX, NON_NEGATIVE_INTEGER_REGEX };
