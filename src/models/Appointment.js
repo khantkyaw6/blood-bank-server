@@ -3,9 +3,9 @@ const { Schema, model } = mongoose;
 
 const appointmentSchema = new Schema(
 	{
-		donar: {
+		donor: {
 			type: Schema.Types.ObjectId,
-			ref: "donar",
+			ref: "donor",
 			required: true,
 		},
 		bloodRequest: {

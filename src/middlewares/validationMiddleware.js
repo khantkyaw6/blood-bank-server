@@ -16,7 +16,7 @@ function validateData(schema) {
 				const errorMessages = error.errors.map((issue) => {
 					// When the issue.message is "Required", we can replace it with a more user-friendly message
 					if (issue.message === "Required") {
-						return issue.path[0] + "generic_required";
+						return issue.path[0] + "is required";
 					} else {
 						return issue.message;
 					}

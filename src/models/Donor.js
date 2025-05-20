@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
-const donarSchema = new Schema(
+const donorSchema = new Schema(
 	{
 		name: {
 			type: String,
@@ -40,5 +40,5 @@ const donarSchema = new Schema(
 	}
 );
 
-const Donar = model("donar", donarSchema);
-module.exports = Donar;
+const Donor = model("donor", donorSchema);
+module.exports = Donor;
