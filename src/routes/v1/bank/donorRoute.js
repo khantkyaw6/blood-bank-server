@@ -5,10 +5,11 @@ const {
 	createDonorSchema,
 	updateDonorSchema,
 } = require("../../../schemas/bank/donor.schema");
+const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
 
 router
 	.route("/")
-	.get(donorController.index)
+	.get(paginationValidateMiddleware, donorController.index)
 	.post(validateData(createDonorSchema), donorController.store);
 
 router

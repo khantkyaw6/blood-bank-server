@@ -2,14 +2,29 @@ const {
 	repositoryAsyncWrapper,
 } = require("../../../helpers/repositoryAsyncWrapper");
 const Donor = require("../../../models/Donor");
+const paginationBuilder = require("../../../utilities/paginationBuilder");
 
 const donorRepository = {
 	findAllDonors: repositoryAsyncWrapper(async (req) => {
-		const donor = await Donor.find()
+		const { limit, page } = req.pagination;
+
+		const donors = await Donor.find()
 			.sort({ createdAt: -1 })
+			.limit(limit)
+			.skip(limit * page)
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
-		return donor;
+
+		const totalDonor = await Donor.countDocuments();
+
+		const pagination = paginationBuilder({
+			limit,
+			page,
+			count: totalDonor,
+			rowLength: donors.length,
+		});
+
+		return { rows: donors, pagination };
 	}),
 	findDonorById: repositoryAsyncWrapper(async (id) => {
 		const donor = await Donor.findById(id).lean();

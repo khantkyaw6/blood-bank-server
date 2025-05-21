@@ -11,12 +11,13 @@ const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const donorService = {
 	index: serviceAsyncWrapper(async (req) => {
-		const donors = await findAllDonors(req);
+		const { rows: donors, pagination } = await findAllDonors(req);
 
 		return {
 			message: "Retrived Donor List Successfully.",
 			data: {
 				donors,
+				pagination,
 			},
 		};
 	}),

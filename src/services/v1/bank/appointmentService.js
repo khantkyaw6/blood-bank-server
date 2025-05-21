@@ -1,0 +1,62 @@
+const { serviceAsyncWrapper } = require("../../../helpers/serviceAsyncWrapper");
+const {
+	createAppointment,
+	updateAppointment,
+	findAllAppointments,
+	findAppointmentById,
+	deleteAppointment,
+} = require("../../../repositories/v1/bank/appointmentRepository");
+const NotFoundError = require("../../../utilities/errors/notFoundError");
+
+const appointmentService = {
+	index: serviceAsyncWrapper(async (req) => {
+		const requests = await findAllAppointments(req);
+
+		return {
+			message: "Retrived Appointment List Successfully.",
+			data: {
+				requests,
+			},
+		};
+	}),
+	show: serviceAsyncWrapper(async (req) => {
+		const { id } = req.params;
+		const request = await findAppointmentById(id);
+
+		console.log({ request });
+
+		if (!request) throw new NotFoundError("Appointment Not Found");
+
+		return {
+			message: "Retrived Appointment Detail Successfully.",
+			data: { request },
+		};
+	}),
+	store: serviceAsyncWrapper(async (req) => {
+		await createAppointment(req.body);
+
+		return {
+			message: "Appointment created successfully.",
+		};
+	}),
+	update: serviceAsyncWrapper(async (req) => {
+		const { id } = req.params;
+
+		const updatedDonor = await updateAppointment({ id, data: req.body });
+
+		if (!updatedDonor) throw new NotFoundError("Appointment Not Found");
+
+		return {
+			message: "Appointment updated successfully.",
+		};
+	}),
+	delete: serviceAsyncWrapper(async (req) => {
+		const { id } = req.params;
+
+		return {
+			message: "Appointment deleted",
+		};
+	}),
+};
+
+module.exports = appointmentService;
