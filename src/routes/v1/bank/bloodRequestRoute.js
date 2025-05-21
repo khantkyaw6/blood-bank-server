@@ -1,20 +1,19 @@
 const router = require("express").Router();
-const bankController = require("../../../controllers/v1/admin/bankController");
+const requestController = require("../../../controllers/v1/bank/requestController");
 const validateData = require("../../../middlewares/validationMiddleware");
 const {
-	createBankSchema,
-	updateBankSchema,
-} = require("../../../schemas/admin/bank.schema");
-
+	createBloodRequestSchema,
+	updateBloodRequestSchema,
+} = require("../../../schemas/bank/request.schema");
 router
 	.route("/")
-	.get(bankController.index)
-	.post(validateData(createBankSchema), bankController.store);
+	.get(requestController.index)
+	.post(validateData(createBloodRequestSchema), requestController.store);
 
 router
 	.route("/:id")
-	.get(bankController.show)
-	.patch(validateData(updateBankSchema), bankController.update)
-	.delete(bankController.delete);
+	.get(requestController.show)
+	.patch(validateData(updateBloodRequestSchema), requestController.update)
+	.delete(requestController.delete);
 
 module.exports = router;
