@@ -5,10 +5,11 @@ const {
 	createAppointmentSchema,
 	updateAppointmentSchema,
 } = require("../../../schemas/bank/appointment.schema");
+const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
 
 router
 	.route("/")
-	.get(appointmentController.index)
+	.get(paginationValidateMiddleware, appointmentController.index)
 	.post(validateData(createAppointmentSchema), appointmentController.store);
 
 router

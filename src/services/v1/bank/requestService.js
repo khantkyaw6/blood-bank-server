@@ -11,12 +11,13 @@ const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const requestService = {
 	index: serviceAsyncWrapper(async (req) => {
-		const requests = await findAllRequests(req);
+		const { rows: requests, pagination } = await findAllRequests(req);
 
 		return {
 			message: "Retrived Request List Successfully.",
 			data: {
 				requests,
+				pagination,
 			},
 		};
 	}),

@@ -2,14 +2,27 @@ const {
 	repositoryAsyncWrapper,
 } = require("../../../helpers/repositoryAsyncWrapper");
 const Bank = require("../../../models/Bank");
+const paginationBuilder = require("../../../utilities/paginationBuilder");
 
 const bankRepository = {
 	findAllBanks: repositoryAsyncWrapper(async (req) => {
-		const bank = await Bank.find()
+		const { limit, page } = req.pagination;
+
+		const banks = await Bank.find()
 			.sort({ createdAt: -1 })
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
-		return bank;
+
+		const totalBanks = await Bank.countDocuments();
+
+		const pagination = paginationBuilder({
+			limit,
+			page,
+			count: totalBanks,
+			rowLength: banks.length,
+		});
+
+		return { rows: banks, pagination };
 	}),
 	findBankById: repositoryAsyncWrapper(async (id) => {
 		const bank = await Bank.findById(id).lean();

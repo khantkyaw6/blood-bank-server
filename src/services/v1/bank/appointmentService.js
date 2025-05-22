@@ -10,12 +10,15 @@ const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const appointmentService = {
 	index: serviceAsyncWrapper(async (req) => {
-		const requests = await findAllAppointments(req);
+		const { rows: appointments, pagination } = await findAllAppointments(
+			req
+		);
 
 		return {
 			message: "Retrived Appointment List Successfully.",
 			data: {
-				requests,
+				appointments,
+				pagination,
 			},
 		};
 	}),

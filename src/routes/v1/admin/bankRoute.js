@@ -5,10 +5,11 @@ const {
 	createBankSchema,
 	updateBankSchema,
 } = require("../../../schemas/admin/bank.schema");
+const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
 
 router
 	.route("/")
-	.get(bankController.index)
+	.get(paginationValidateMiddleware, bankController.index)
 	.post(validateData(createBankSchema), bankController.store);
 
 router

@@ -5,9 +5,11 @@ const {
 	createBloodRequestSchema,
 	updateBloodRequestSchema,
 } = require("../../../schemas/bank/request.schema");
+const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
+
 router
 	.route("/")
-	.get(requestController.index)
+	.get(paginationValidateMiddleware, requestController.index)
 	.post(validateData(createBloodRequestSchema), requestController.store);
 
 router

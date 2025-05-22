@@ -2,11 +2,16 @@ const {
 	repositoryAsyncWrapper,
 } = require("../../../helpers/repositoryAsyncWrapper");
 const Appointment = require("../../../models/Appointment");
+const paginationBuilder = require("../../../utilities/paginationBuilder");
 
 const appointmentRepository = {
 	findAllAppointments: repositoryAsyncWrapper(async (req) => {
+		const { limit, page } = req.pagination;
+
 		const appointments = await Appointment.find()
 			.sort({ createdAt: -1 })
+			.limit(limit)
+			.skip(limit * page)
 			.populate([
 				{ path: "bloodRequest", select: "name phone bloodType" },
 				{ path: "donor", select: "name gender phone bloodType" },
@@ -14,7 +19,17 @@ const appointmentRepository = {
 			])
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
-		return appointments;
+
+		const totalAppointments = await Appointment.countDocuments();
+
+		const pagination = paginationBuilder({
+			limit,
+			page,
+			count: totalAppointments,
+			rowLength: appointments.length,
+		});
+
+		return { rows: appointments, pagination };
 	}),
 	findAppointmentById: repositoryAsyncWrapper(async (id) => {
 		const appointment = await Appointment.findById(id)

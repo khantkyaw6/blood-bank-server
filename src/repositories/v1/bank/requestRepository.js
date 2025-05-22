@@ -2,14 +2,29 @@ const {
 	repositoryAsyncWrapper,
 } = require("../../../helpers/repositoryAsyncWrapper");
 const Request = require("../../../models/BloodRequest");
+const paginationBuilder = require("../../../utilities/paginationBuilder");
 
 const requestRepository = {
 	findAllRequests: repositoryAsyncWrapper(async (req) => {
-		const request = await Request.find()
+		const { limit, page } = req.pagination;
+
+		const requests = await Request.find()
 			.sort({ createdAt: -1 })
+			.limit(limit)
+			.skip(limit * page)
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
-		return request;
+
+		const totalRequest = await Request.countDocuments();
+
+		const pagination = paginationBuilder({
+			limit,
+			page,
+			count: totalRequest,
+			rowLength: requests.length,
+		});
+
+		return { rows: requests, pagination };
 	}),
 	findRequestById: repositoryAsyncWrapper(async (id) => {
 		const request = await Request.findById(id).lean();
