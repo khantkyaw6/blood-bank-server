@@ -1,3 +1,4 @@
+const { hashPassword } = require("../../../helpers/passwordHelper");
 const {
 	repositoryAsyncWrapper,
 } = require("../../../helpers/repositoryAsyncWrapper");
@@ -29,7 +30,10 @@ const bankRepository = {
 		return bank;
 	}),
 	createBank: repositoryAsyncWrapper(async (data) => {
-		await Bank.create({ ...data });
+		await Bank.create({
+			...data,
+			password: await hashPassword(data.password),
+		});
 	}),
 	updateBank: repositoryAsyncWrapper(async ({ id, data }) => {
 		const updateBank = await Bank.findByIdAndUpdate(
