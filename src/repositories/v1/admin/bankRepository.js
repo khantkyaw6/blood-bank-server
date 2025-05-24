@@ -11,6 +11,8 @@ const bankRepository = {
 
 		const banks = await Bank.find()
 			.sort({ createdAt: -1 })
+			.limit(limit)
+			.skip(limit * page)
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
 

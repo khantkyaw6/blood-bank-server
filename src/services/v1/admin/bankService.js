@@ -34,7 +34,6 @@ const bankService = {
 		};
 	}),
 	store: serviceAsyncWrapper(async (req) => {
-		
 		await createBank(req.body);
 
 		return {
