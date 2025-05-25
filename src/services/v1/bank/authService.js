@@ -2,6 +2,7 @@ const { comparePassword } = require("../../../helpers/passwordHelper");
 const { serviceAsyncWrapper } = require("../../../helpers/serviceAsyncWrapper");
 const signToken = require("../../../helpers/signToken");
 const Bank = require("../../../models/Bank");
+const BadRequestError = require("../../../utilities/errors/badRequestError");
 
 const authService = {
 	login: serviceAsyncWrapper(async (req) => {
