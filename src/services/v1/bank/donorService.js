@@ -13,6 +13,8 @@ const donorService = {
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: donors, pagination } = await findAllDonors(req);
 
+		console.log({ jwt: req.admin });
+
 		return {
 			message: "Retrived Donor List Successfully.",
 			data: {
@@ -35,7 +37,7 @@ const donorService = {
 		};
 	}),
 	store: serviceAsyncWrapper(async (req) => {
-		await createDonor(req.body);
+		await createDonor({ ...req.body, bank: req.admin._id });
 
 		return {
 			message: "Donor created successfully.",
@@ -44,7 +46,10 @@ const donorService = {
 	update: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
 
-		const updatedDonor = await updateDonor({ id, data: req.body });
+		const updatedDonor = await updateDonor({
+			id,
+			data: { ...req.body, bank: req.admin._id },
+		});
 
 		if (!updatedDonor) throw new NotFoundError("Donor Not Found");
 

@@ -4,16 +4,15 @@ const {
 	jwt_token_expiresIn,
 } = require("../config/auth.config");
 
-const signToken = async (admin) => {
+const signToken = async (data) => {
 	return jwt.sign(
 		{
-			admin: {
-				_id: admin._id,
-				role: admin.role,
-			},
+			...data,
 		},
-		jwt_token_secret || "thisiscondomanagementsystem",
-		{ expiresIn: jwt_token_expiresIn + "d" }
+		jwt_token_secret || "thisisbloodbanksystem",
+		{
+			expiresIn: jwt_token_expiresIn + "d",
+		}
 	);
 };
 

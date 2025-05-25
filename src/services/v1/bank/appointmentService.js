@@ -36,7 +36,7 @@ const appointmentService = {
 		};
 	}),
 	store: serviceAsyncWrapper(async (req) => {
-		await createAppointment(req.body);
+		await createAppointment({ ...req.body, bank: req.admin._id });
 
 		return {
 			message: "Appointment created successfully.",
@@ -45,7 +45,10 @@ const appointmentService = {
 	update: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
 
-		const updatedDonor = await updateAppointment({ id, data: req.body });
+		const updatedDonor = await updateAppointment({
+			id,
+			data: { ...req.body, bank: req.admin._id },
+		});
 
 		if (!updatedDonor) throw new NotFoundError("Appointment Not Found");
 

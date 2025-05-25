@@ -35,7 +35,7 @@ const requestService = {
 		};
 	}),
 	store: serviceAsyncWrapper(async (req) => {
-		await createRequest(req.body);
+		await createRequest({ ...req.body, bank: req.admin._id });
 
 		return {
 			message: "Request created successfully.",
@@ -44,7 +44,10 @@ const requestService = {
 	update: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
 
-		const updatedDonor = await updateRequest({ id, data: req.body });
+		const updatedDonor = await updateRequest({
+			id,
+			data: { ...req.body, bank: req.admin._id },
+		});
 
 		if (!updatedDonor) throw new NotFoundError("Request Not Found");
 

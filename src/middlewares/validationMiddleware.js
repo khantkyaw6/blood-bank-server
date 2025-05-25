@@ -3,7 +3,6 @@ const { StatusCodes } = require("http-status-codes");
 
 function validateData(schema) {
 	return (req, res, next) => {
-		console.log("in validate data", req.user, req.params);
 		try {
 			console.log("in validate data", req.body);
 			const validatedData = schema.parse(req.body);

@@ -3,6 +3,11 @@ const { Schema, model } = mongoose;
 
 const donorSchema = new Schema(
 	{
+		bank: {
+			type: Schema.Types.ObjectId,
+			ref: "bank",
+			required: true,
+		},
 		name: {
 			type: String,
 			required: true,

@@ -8,11 +8,11 @@ const authService = {
 		const { email, password } = req.body;
 		const checkBank = await Bank.findOne({ email }).lean();
 
-		if (!checkBank) throw new BadRequestError(req.t("Bank Not Found"));
+		if (!checkBank) throw new BadRequestError("Bank Not Found");
 
 		const isEqual = await comparePassword(password, checkBank.password);
 
-		if (!isEqual) throw new BadRequestError(req.t("incorrect_password"));
+		if (!isEqual) throw new BadRequestError("Incorrect Password");
 
 		const token = await signToken(checkBank);
 

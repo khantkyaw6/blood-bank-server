@@ -11,6 +11,7 @@ const NotFoundError = require("../../../utilities/errors/notFoundError");
 const bankService = {
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: banks, pagination } = await findAllBanks(req);
+		console.log({ jwt: req.admin });
 
 		return {
 			message: "Retrived Bank List Successfully.",
