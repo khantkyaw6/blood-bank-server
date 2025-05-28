@@ -8,7 +8,7 @@ const appointmentRepository = {
 	findAllAppointments: repositoryAsyncWrapper(async (req) => {
 		const { limit, page } = req.pagination;
 
-		const appointments = await Appointment.find()
+		const appointments = await Appointment.find({ bank: req.admin._id })
 			.sort({ createdAt: -1 })
 			.limit(limit)
 			.skip(limit * page)
@@ -20,7 +20,9 @@ const appointmentRepository = {
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
 
-		const totalAppointments = await Appointment.countDocuments();
+		const totalAppointments = await Appointment.countDocuments({
+			bank: req.admin._id,
+		});
 
 		const pagination = paginationBuilder({
 			limit,

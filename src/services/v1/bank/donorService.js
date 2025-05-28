@@ -13,7 +13,7 @@ const donorService = {
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: donors, pagination } = await findAllDonors(req);
 
-		console.log({ jwt: req.admin });
+		console.log({ jwt: req.admin, bankId: req.admin._id });
 
 		return {
 			message: "Retrived Donor List Successfully.",

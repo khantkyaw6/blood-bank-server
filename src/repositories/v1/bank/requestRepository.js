@@ -8,14 +8,19 @@ const requestRepository = {
 	findAllRequests: repositoryAsyncWrapper(async (req) => {
 		const { limit, page } = req.pagination;
 
-		const requests = await Request.find()
+		const requests = await Request.find({
+			bank: req.admin._id,
+		})
 			.sort({ createdAt: -1 })
 			.limit(limit)
 			.skip(limit * page)
+			.populate([{ path: "bank", select: "title email" }])
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
 
-		const totalRequest = await Request.countDocuments();
+		const totalRequest = await Request.countDocuments({
+			bank: req.admin._id,
+		});
 
 		const pagination = paginationBuilder({
 			limit,

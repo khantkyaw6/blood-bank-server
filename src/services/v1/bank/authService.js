@@ -11,6 +11,8 @@ const authService = {
 
 		if (!checkBank) throw new BadRequestError("Bank Not Found");
 
+		console.log({ checkBank });
+
 		const isEqual = await comparePassword(password, checkBank.password);
 
 		if (!isEqual) throw new BadRequestError("Incorrect Password");
