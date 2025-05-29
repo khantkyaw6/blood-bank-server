@@ -27,6 +27,15 @@ const bankRepository = {
 
 		return { rows: banks, pagination };
 	}),
+
+	findAllBanksWithoutPagination: repositoryAsyncWrapper(async (req) => {
+		const banks = await Bank.find()
+			.sort({ createdAt: -1 })
+			.select({ updatedAt: 0, __v: 0, password: 0 })
+			.lean();
+
+		return banks;
+	}),
 	findBankById: repositoryAsyncWrapper(async (id) => {
 		const bank = await Bank.findById(id).lean();
 		return bank;

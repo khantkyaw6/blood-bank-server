@@ -17,7 +17,7 @@ const donorRepository = {
 			.lean();
 
 		const totalDonor = await Donor.countDocuments({
-			bank: req.admin.bank._id,
+			bank: req.admin._id,
 		});
 
 		const pagination = paginationBuilder({
