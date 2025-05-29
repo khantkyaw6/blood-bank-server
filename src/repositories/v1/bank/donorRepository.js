@@ -18,6 +18,7 @@ const donorRepository = {
 
 		const totalDonor = await Donor.countDocuments({
 			bank: req.admin._id,
+			deleted: false,
 		});
 
 		const pagination = paginationBuilder({

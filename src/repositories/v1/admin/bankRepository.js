@@ -16,7 +16,7 @@ const bankRepository = {
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
 
-		const totalBanks = await Bank.countDocuments();
+		const totalBanks = await Bank.countDocuments({ deleted: false });
 
 		const pagination = paginationBuilder({
 			limit,

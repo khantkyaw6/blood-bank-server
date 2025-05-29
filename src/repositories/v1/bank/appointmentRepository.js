@@ -25,6 +25,7 @@ const appointmentRepository = {
 
 		const totalAppointments = await Appointment.countDocuments({
 			bank: req.admin._id,
+			deleted: false,
 		});
 
 		const pagination = paginationBuilder({

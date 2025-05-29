@@ -21,6 +21,7 @@ const requestRepository = {
 
 		const totalRequest = await Request.countDocuments({
 			bank: req.admin._id,
+			deleted: false,
 		});
 
 		const pagination = paginationBuilder({
