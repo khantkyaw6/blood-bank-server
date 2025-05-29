@@ -4,6 +4,15 @@ const responseMessage = require("../../../helpers/responseMessageHandler");
 const requestService = require("../../../services/v1/bank/requestService");
 
 const requestController = {
+	report: controllerAsyncWrapper(async (req, res) => {
+		const data = await requestService.report(req);
+		responseMessage(
+			res,
+			data.message,
+			data.data,
+			data.status || StatusCodes.OK
+		);
+	}),
 	index: controllerAsyncWrapper(async (req, res) => {
 		const data = await requestService.index(req);
 		responseMessage(

@@ -5,10 +5,21 @@ const {
 	findAllAppointments,
 	findAppointmentById,
 	deleteAppointment,
+	findAllAppointmentsWithoutPagination,
 } = require("../../../repositories/v1/bank/appointmentRepository");
 const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const appointmentService = {
+	report: serviceAsyncWrapper(async (req) => {
+		const appointments = await findAllAppointmentsWithoutPagination(req);
+
+		return {
+			message: "Retrived Appointment List Successfully.",
+			data: {
+				appointments,
+			},
+		};
+	}),
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: appointments, pagination } = await findAllAppointments(
 			req

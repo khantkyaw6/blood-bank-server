@@ -5,11 +5,22 @@ const {
 	createRequest,
 	updateRequest,
 	deleteRequest,
+	findAllRequestsWithoutPagination,
 } = require("../../../repositories/v1/bank/requestRepository");
 
 const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const requestService = {
+	report: serviceAsyncWrapper(async (req) => {
+		const requests = await findAllRequestsWithoutPagination(req);
+
+		return {
+			message: "Retrived Request List Successfully.",
+			data: {
+				requests,
+			},
+		};
+	}),
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: requests, pagination } = await findAllRequests(req);
 
@@ -57,6 +68,10 @@ const requestService = {
 	}),
 	delete: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
+		await updateRequest({
+			id,
+			data: { deleted: true },
+		});
 
 		return {
 			message: "Request deleted",

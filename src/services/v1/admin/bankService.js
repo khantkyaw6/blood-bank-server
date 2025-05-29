@@ -5,6 +5,7 @@ const {
 	findBankById,
 	createBank,
 	updateBank,
+	findAllBanksWithoutPagination,
 } = require("../../../repositories/v1/admin/bankRepository");
 const NotFoundError = require("../../../utilities/errors/notFoundError");
 
@@ -57,6 +58,18 @@ const bankService = {
 
 		return {
 			message: "bank deleted",
+		};
+	}),
+
+	report: serviceAsyncWrapper(async (req) => {
+		const banks = await findAllBanksWithoutPagination(req);
+		console.log({ jwt: req.admin });
+
+		return {
+			message: "Retrived Bank List Successfully.",
+			data: {
+				banks,
+			},
 		};
 	}),
 };

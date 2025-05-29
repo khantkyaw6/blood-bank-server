@@ -13,6 +13,15 @@ const donorController = {
 			data.status || StatusCodes.OK
 		);
 	}),
+	report: controllerAsyncWrapper(async (req, res) => {
+		const data = await donorService.report(req);
+		responseMessage(
+			res,
+			data.message,
+			data.data,
+			data.status || StatusCodes.OK
+		);
+	}),
 	show: controllerAsyncWrapper(async (req, res) => {
 		const data = await donorService.show(req);
 		responseMessage(

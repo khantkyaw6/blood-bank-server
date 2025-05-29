@@ -4,6 +4,15 @@ const responseMessage = require("../../../helpers/responseMessageHandler");
 const appointmentService = require("../../../services/v1/bank/appointmentService");
 
 const appointmentController = {
+	report: controllerAsyncWrapper(async (req, res) => {
+		const data = await appointmentService.report(req);
+		responseMessage(
+			res,
+			data.message,
+			data.data,
+			data.status || StatusCodes.OK
+		);
+	}),
 	index: controllerAsyncWrapper(async (req, res) => {
 		const data = await appointmentService.index(req);
 		responseMessage(

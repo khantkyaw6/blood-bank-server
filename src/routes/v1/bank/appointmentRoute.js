@@ -7,6 +7,8 @@ const {
 } = require("../../../schemas/bank/appointment.schema");
 const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
 
+router.route("/report").get(appointmentController.report);
+
 router
 	.route("/")
 	.get(paginationValidateMiddleware, appointmentController.index)

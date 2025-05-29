@@ -36,6 +36,16 @@ const appointmentRepository = {
 
 		return { rows: appointments, pagination };
 	}),
+	findAllAppointmentsWithoutPagination: repositoryAsyncWrapper(
+		async (req) => {
+			const appointments = await Appointment.find({ deleted: false })
+				.sort({ createdAt: -1 })
+				.select({ updatedAt: 0, __v: 0 })
+				.lean();
+
+			return appointments;
+		}
+	),
 	findAppointmentById: repositoryAsyncWrapper(async (id) => {
 		const appointment = await Appointment.findById(id)
 			.populate([

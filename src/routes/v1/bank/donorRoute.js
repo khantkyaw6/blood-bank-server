@@ -7,6 +7,8 @@ const {
 } = require("../../../schemas/bank/donor.schema");
 const paginationValidateMiddleware = require("../../../middlewares/paginationValidateMiddleware");
 
+router.route("/report").get(donorController.report);
+
 router
 	.route("/")
 	.get(paginationValidateMiddleware, donorController.index)

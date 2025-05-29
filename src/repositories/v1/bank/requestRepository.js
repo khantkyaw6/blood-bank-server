@@ -32,6 +32,14 @@ const requestRepository = {
 
 		return { rows: requests, pagination };
 	}),
+	findAllRequestsWithoutPagination: repositoryAsyncWrapper(async (req) => {
+		const requests = await Request.find({ deleted: false })
+			.sort({ createdAt: -1 })
+			.select({ updatedAt: 0, __v: 0 })
+			.lean();
+
+		return requests;
+	}),
 	findRequestById: repositoryAsyncWrapper(async (id) => {
 		const request = await Request.findById(id).lean();
 		return request;

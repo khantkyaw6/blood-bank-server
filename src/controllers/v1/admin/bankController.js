@@ -49,6 +49,15 @@ const bankController = {
 			data.status || StatusCodes.OK
 		);
 	}),
+	report: controllerAsyncWrapper(async (req, res) => {
+		const data = await bankService.report(req);
+		responseMessage(
+			res,
+			data.message,
+			data.data,
+			data.status || StatusCodes.OK
+		);
+	}),
 };
 
 module.exports = bankController;

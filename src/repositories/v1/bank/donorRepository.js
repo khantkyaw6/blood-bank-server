@@ -29,6 +29,14 @@ const donorRepository = {
 
 		return { rows: donors, pagination };
 	}),
+	findAllDonorsWithoutPagination: repositoryAsyncWrapper(async (req) => {
+		const donors = await Donor.find({ deleted: false })
+			.sort({ createdAt: -1 })
+			.select({ updatedAt: 0, __v: 0 })
+			.lean();
+
+		return donors;
+	}),
 	findDonorById: repositoryAsyncWrapper(async (id) => {
 		const donor = await Donor.findById(id)
 			.populate([{ path: "bank" }])

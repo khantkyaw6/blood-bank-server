@@ -5,11 +5,24 @@ const {
 	createDonor,
 	updateDonor,
 	deleteDonor,
+	findAllDonorsWithoutPagination,
 } = require("../../../repositories/v1/bank/donorRepository");
 
 const NotFoundError = require("../../../utilities/errors/notFoundError");
 
 const donorService = {
+	report: serviceAsyncWrapper(async (req) => {
+		const donors = await findAllDonorsWithoutPagination(req);
+
+		console.log({ jwt: req.admin, bankId: req.admin._id });
+
+		return {
+			message: "Retrived Donor List Successfully.",
+			data: {
+				donors,
+			},
+		};
+	}),
 	index: serviceAsyncWrapper(async (req) => {
 		const { rows: donors, pagination } = await findAllDonors(req);
 
