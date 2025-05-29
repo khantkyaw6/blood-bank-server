@@ -27,6 +27,10 @@ const appointmentSchema = new Schema(
 			enum: ["scheduled", "completed", "cancelled"],
 			default: "scheduled",
 		},
+		deleted: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

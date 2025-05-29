@@ -38,6 +38,10 @@ const bankSchema = new Schema(
 			enum: ["active", "suspend"],
 			default: "active",
 		},
+		deleted: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

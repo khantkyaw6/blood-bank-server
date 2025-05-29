@@ -9,7 +9,7 @@ const bankRepository = {
 	findAllBanks: repositoryAsyncWrapper(async (req) => {
 		const { limit, page } = req.pagination;
 
-		const banks = await Bank.find()
+		const banks = await Bank.find({ deleted: false })
 			.sort({ createdAt: -1 })
 			.limit(limit)
 			.skip(limit * page)
@@ -55,7 +55,9 @@ const bankRepository = {
 
 		return updateBank;
 	}),
-	deleteBank: repositoryAsyncWrapper(async (id) => {}),
+	deleteBank: repositoryAsyncWrapper(async (id) => {
+		await Bank.findByIdAndUpdate(id, { deleted: true });
+	}),
 };
 
 module.exports = bankRepository;

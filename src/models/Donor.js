@@ -38,6 +38,10 @@ const donorSchema = new Schema(
 			type: Number,
 			required: true,
 		},
+		deleted: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

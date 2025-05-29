@@ -44,6 +44,10 @@ const bloodRequestSchema = new Schema(
 			enum: ["pending", "approved", "rejected", "fulfilled"],
 			default: "pending",
 		},
+		deleted: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	{
 		timestamps: true,

@@ -8,7 +8,7 @@ const donorRepository = {
 	findAllDonors: repositoryAsyncWrapper(async (req) => {
 		const { limit, page } = req.pagination;
 
-		const donors = await Donor.find({ bank: req.admin._id })
+		const donors = await Donor.find({ bank: req.admin._id, deleted: false })
 			.sort({ createdAt: -1 })
 			.limit(limit)
 			.skip(limit * page)
@@ -47,7 +47,9 @@ const donorRepository = {
 
 		return updateDonor;
 	}),
-	deleteDonor: repositoryAsyncWrapper(async (id) => {}),
+	deleteDonor: repositoryAsyncWrapper(async (id) => {
+		await Donor.findByIdAndUpdate(id, { deleted: true });
+	}),
 };
 
 module.exports = donorRepository;

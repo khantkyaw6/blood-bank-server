@@ -8,7 +8,10 @@ const appointmentRepository = {
 	findAllAppointments: repositoryAsyncWrapper(async (req) => {
 		const { limit, page } = req.pagination;
 
-		const appointments = await Appointment.find({ bank: req.admin._id })
+		const appointments = await Appointment.find({
+			bank: req.admin._id,
+			deleted: false,
+		})
 			.sort({ createdAt: -1 })
 			.limit(limit)
 			.skip(limit * page)
@@ -55,7 +58,11 @@ const appointmentRepository = {
 
 		return updateRequest;
 	}),
-	deleteAppointment: repositoryAsyncWrapper(async (id) => {}),
+	deleteAppointment: repositoryAsyncWrapper(async (id) => {
+		await Appointment.findByIdAndUpdate(id, {
+			deleted: true,
+		});
+	}),
 };
 
 module.exports = appointmentRepository;

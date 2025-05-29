@@ -10,6 +10,7 @@ const requestRepository = {
 
 		const requests = await Request.find({
 			bank: req.admin._id,
+			deleted: false,
 		})
 			.sort({ createdAt: -1 })
 			.limit(limit)
@@ -47,7 +48,9 @@ const requestRepository = {
 
 		return updateRequest;
 	}),
-	deleteRequest: repositoryAsyncWrapper(async (id) => {}),
+	deleteRequest: repositoryAsyncWrapper(async (id) => {
+		await Request.findByIdAndUpdate(id, { deleted: true });
+	}),
 };
 
 module.exports = requestRepository;
