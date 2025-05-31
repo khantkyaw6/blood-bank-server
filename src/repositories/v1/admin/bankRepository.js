@@ -29,7 +29,7 @@ const bankRepository = {
 	}),
 
 	findAllBanksWithoutPagination: repositoryAsyncWrapper(async (req) => {
-		const banks = await Bank.find()
+		const banks = await Bank.find({ deleted: false })
 			.sort({ createdAt: -1 })
 			.select({ updatedAt: 0, __v: 0, password: 0 })
 			.lean();
