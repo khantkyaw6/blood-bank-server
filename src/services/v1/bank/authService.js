@@ -7,7 +7,7 @@ const BadRequestError = require("../../../utilities/errors/badRequestError");
 const authService = {
 	login: serviceAsyncWrapper(async (req) => {
 		const { email, password } = req.body;
-		const checkBank = await Bank.findOne({ email }).lean();
+		const checkBank = await Bank.findOne({ email, deleted: false }).lean();
 
 		if (!checkBank) throw new BadRequestError("Bank Not Found");
 
