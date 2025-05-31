@@ -42,7 +42,10 @@ const requestRepository = {
 		return requests;
 	}),
 	findRequestById: repositoryAsyncWrapper(async (id) => {
-		const request = await Request.findById(id).lean();
+		const request = await Request.findOne({
+			_id: id,
+			deleted: false,
+		}).lean();
 		return request;
 	}),
 	createRequest: repositoryAsyncWrapper(async (data) => {

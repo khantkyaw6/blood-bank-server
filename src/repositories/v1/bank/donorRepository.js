@@ -39,7 +39,7 @@ const donorRepository = {
 		return donors;
 	}),
 	findDonorById: repositoryAsyncWrapper(async (id) => {
-		const donor = await Donor.findById(id)
+		const donor = await Donor.findOne({ _id: id, deleted: false })
 			.populate([{ path: "bank" }])
 			.lean();
 		return donor;

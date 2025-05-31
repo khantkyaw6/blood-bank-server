@@ -48,7 +48,10 @@ const appointmentRepository = {
 		}
 	),
 	findAppointmentById: repositoryAsyncWrapper(async (id) => {
-		const appointment = await Appointment.findById(id)
+		const appointment = await Appointment.findOne({
+			_id: id,
+			deleted: false,
+		})
 			.populate([
 				{ path: "bloodRequest", select: "-createdAt -updatedAt" },
 				{ path: "donor", select: "-createdAt -updatedAt" },

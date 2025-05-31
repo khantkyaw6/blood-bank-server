@@ -72,7 +72,10 @@ const donorService = {
 	}),
 	delete: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
-
+		await updateDonor({
+			id,
+			data: { deleted: true },
+		});
 		return {
 			message: "donor deleted",
 		};

@@ -37,7 +37,7 @@ const bankRepository = {
 		return banks;
 	}),
 	findBankById: repositoryAsyncWrapper(async (id) => {
-		const bank = await Bank.findById(id).lean();
+		const bank = await Bank.findOne({ _id: id, deleted: false }).lean();
 		return bank;
 	}),
 	createBank: repositoryAsyncWrapper(async (data) => {
