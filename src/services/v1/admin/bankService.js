@@ -6,6 +6,7 @@ const {
 	createBank,
 	updateBank,
 	findAllBanksWithoutPagination,
+	deleteBank,
 } = require("../../../repositories/v1/admin/bankRepository");
 const NotFoundError = require("../../../utilities/errors/notFoundError");
 
@@ -55,6 +56,8 @@ const bankService = {
 	}),
 	delete: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
+
+		await deleteBank(id);
 
 		return {
 			message: "bank deleted",
