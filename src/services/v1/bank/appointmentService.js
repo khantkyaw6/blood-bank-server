@@ -69,7 +69,7 @@ const appointmentService = {
 	}),
 	delete: serviceAsyncWrapper(async (req) => {
 		const { id } = req.params;
-
+		await deleteAppointment(id);
 		return {
 			message: "Appointment deleted",
 		};
